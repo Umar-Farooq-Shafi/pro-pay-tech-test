@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -17,14 +16,12 @@ use Illuminate\Support\Facades\Route;
 */
 
 // Auth
-Route::group(['middleware' => 'guest'], function () {
-    Route::match(['get', 'post'], 'login', [LoginController::class, 'index'])->name('login');
-
-    Route::match(['get', 'post'], 'register', [RegisterController::class, 'index'])->name('register');
-});
+Route::match(['get', 'post'], 'login', [LoginController::class, 'index'])
+    ->name('login')
+    ->middleware('guest');
 
 Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 
-Route::group(['middleware' => ['auth']], function () {
+Route::group(['middleware' => ['admin']], function () {
     Route::get('/', [UserController::class, 'index'])->name('home');
 });

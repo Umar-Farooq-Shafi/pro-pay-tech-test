@@ -1,7 +1,6 @@
 import React from 'react';
 import Helmet from 'react-helmet';
 
-import { InertiaLink } from '@inertiajs/inertia-react';
 import { useForm } from '@inertiajs/inertia-react';
 
 import Logo from '@/Shared/Logo';
@@ -18,26 +17,30 @@ export default () => {
 
     function handleSubmit(e) {
         e.preventDefault();
-        post(route('login.attempt'));
+        post(route('login'));
     }
 
     return (
         <div className="flex items-center justify-center min-h-screen p-6 bg-indigo-900">
             <Helmet title="Login" />
+
             <div className="w-full max-w-md">
                 <Logo
                     className="text-center text-5xl"
                 />
+
                 <form
                     onSubmit={handleSubmit}
                     className="mt-8 overflow-hidden bg-white rounded-lg shadow-xl"
                 >
-                    <div className="px-10 py-12">
+                    <div className=" px-10 py-12">
                         <h1 className="text-3xl font-bold text-center">Welcome Back!</h1>
                         <div className="w-24 mx-auto mt-6 border-b-2" />
+
                         <FlashMessages />
+
                         <TextInput
-                            className="mt-10"
+                            className="flex mt-10"
                             label="Email"
                             name="email"
                             type="email"
@@ -73,15 +76,9 @@ export default () => {
                             <span className="text-sm">Remember Me</span>
                         </label>
 
-                        <InertiaLink
-                            className={'text-lime-500 mt-2 hover:text-orange-500 cursor-pointer'}
-                            href={route('register')}
-                        >Register for an account</InertiaLink>
                     </div>
+
                     <div className="flex items-center justify-between px-10 py-4 bg-gray-100 border-t border-gray-200">
-                        <a className="hover:underline" tabIndex="-1" href="#reset-password">
-                            Forgot password?
-                        </a>
                         <LoadingButton
                             type="submit"
                             loading={processing}

@@ -20,6 +20,6 @@ export default ({ className, ...props }) => (
             className
         )}
     >
-        Glass Assist
+        ProPay
     </InertiaLink>
 );

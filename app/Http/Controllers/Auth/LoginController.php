@@ -69,10 +69,12 @@ class LoginController extends Controller
                     ->withInput($request->except('password'));
             }
 
-            if (Auth::attempt($request->all())) {
+            if (Auth::attempt($request->except('remember'), $request->get('remember'))) {
                 return redirect()->route('home');
             } else {
-                return  redirect()->back();
+                return redirect()->back()
+                    ->with('error', 'Unauthorized')
+                    ->with(['errors' => 'eh']);
             }
         }
 
