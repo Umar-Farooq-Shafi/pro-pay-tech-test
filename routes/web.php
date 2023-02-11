@@ -23,5 +23,11 @@ Route::match(['get', 'post'], 'login', [LoginController::class, 'index'])
 Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 
 Route::group(['middleware' => ['admin']], function () {
-    Route::get('/', [UserController::class, 'index'])->name('home');
+    Route::get('/', [UserController::class, 'index'])->name('users');
+
+    Route::get('/edit', [UserController::class, 'edit'])->name('users.edit');
+
+    Route::get('/create', [UserController::class, 'create'])->name('users.create');
+    Route::post('/store', [UserController::class, 'store'])->name('users.store');
+
 });

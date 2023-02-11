@@ -15,6 +15,8 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
 use Laravel\Sanctum\HasApiTokens;
 use Laravel\Sanctum\PersonalAccessToken;
+use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
+use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 
 /**
  * App\Models\User
@@ -57,7 +59,7 @@ use Laravel\Sanctum\PersonalAccessToken;
  * @method static Builder|User whereUpdatedAt($value)
  * @mixin Eloquent
  */
-class User extends Authenticatable
+class User extends Authenticatable implements AuthenticatableContract, AuthorizableContract
 {
     use HasApiTokens, HasFactory, Notifiable;
 
@@ -97,4 +99,43 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'interests' => 'array'
     ];
+
+    /**
+     * @return bool
+     */
+    public function isDemoUser(): bool
+    {
+        return $this->email === 'admin@email.com';
+    }
+
+    /**
+     * @param $query
+     * @return void
+     */
+    public function scopeOrderByName($query): void
+    {
+        $query->orderBy('surname')->orderBy('name');
+    }
+
+    /**
+     * @param $query
+     * @param array $filters
+     * @return void
+     */
+    public function scopeFilter($query, array $filters): void
+    {
+        $query->when($filters['search'] ?? null, function ($query, $search) {
+            $query->where(function ($query) use ($search) {
+                $query->where('name', 'like', '%'.$search.'%')
+                    ->orWhere('surname', 'like', '%'.$search.'%')
+                    ->orWhere('email', 'like', '%'.$search.'%');
+            });
+        })->when($filters['trashed'] ?? null, function ($query, $trashed) {
+            if ($trashed === 'with') {
+                $query->withTrashed();
+            } elseif ($trashed === 'only') {
+                $query->onlyTrashed();
+            }
+        });
+    }
 }

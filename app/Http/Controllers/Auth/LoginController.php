@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
-use App\Services\UserService;
 use Auth;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\RedirectResponse;
@@ -42,19 +41,6 @@ class LoginController extends Controller
     private string $username;
 
     /**
-     * @var UserService
-     */
-    private UserService $userService;
-
-    /**
-     * @param UserService $userService
-     */
-    public function __construct(UserService $userService)
-    {
-        $this->userService = $userService;
-    }
-
-    /**
      * @param Request $request
      * @return RedirectResponse|Response
      */
@@ -70,11 +56,12 @@ class LoginController extends Controller
             }
 
             if (Auth::attempt($request->except('remember'), $request->get('remember'))) {
-                return redirect()->route('home');
+                return redirect()
+                    ->route('users')
+                    ->with('success', 'Login Successfully...');
             } else {
                 return redirect()->back()
-                    ->with('error', 'Unauthorized')
-                    ->with(['errors' => 'eh']);
+                    ->with('error', 'Unauthorized');
             }
         }
 
