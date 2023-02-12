@@ -111,7 +111,7 @@ const Index = () => {
                                         href={route('users.edit', id)}
                                         className="flex items-center px-6 py-4 focus:text-indigo focus:outline-none"
                                     >
-                                        {interests}
+                                        {typeof interests}
                                     </InertiaLink>
                                 </td>
                                 <td className="w-px border-t">
