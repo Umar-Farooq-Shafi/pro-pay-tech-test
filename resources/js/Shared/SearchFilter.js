@@ -5,8 +5,6 @@ import { usePrevious } from 'react-use';
 
 import pickBy from 'lodash/pickBy';
 
-import SelectInput from '@/Shared/SelectInput';
-
 export default () => {
     const { filters } = usePage().props;
     const [opened, setOpened] = useState(false);
