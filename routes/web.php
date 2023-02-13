@@ -22,14 +22,16 @@ Route::match(['get', 'post'], 'login', [LoginController::class, 'index'])
 
 Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 
-Route::group(['middleware' => ['admin']], function () {
-    Route::get('/', [UserController::class, 'index'])->name('users');
+Route::group(['middleware' => 'admin'], function () {
+    Route::controller(UserController::class)->group(function () {
+        Route::get('/', 'index')->name('users')->middleware('remember');
 
-    Route::get('/edit', [UserController::class, 'edit'])->name('users.edit');
-    Route::put('/update', [UserController::class, 'update'])->name('users.update');
+        Route::get('users/{user}/edit', 'edit')->name('users.edit');
+        Route::put('users/{user}', 'update')->name('users.update');
 
-    Route::get('/create', [UserController::class, 'create'])->name('users.create');
-    Route::post('/store', [UserController::class, 'store'])->name('users.store');
+        Route::get('/create', 'create')->name('users.create');
+        Route::post('/store', 'store')->name('users.store');
 
-    Route::delete('/destroy', [UserController::class, 'destroy'])->name('users.destroy');
+        Route::delete('users/{user}', 'destroy')->name('users.destroy');
+    });
 });

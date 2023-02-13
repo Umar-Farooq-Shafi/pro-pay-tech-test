@@ -3,15 +3,21 @@ import Helmet from 'react-helmet';
 import { Inertia } from '@inertiajs/inertia';
 import { InertiaLink, usePage, useForm } from '@inertiajs/inertia-react';
 
+import Select from 'react-select';
+import makeAnimated from 'react-select/animated';
+
 import Layout from '@/Shared/Layout';
 import DeleteButton from '@/Shared/DeleteButton';
 import LoadingButton from '@/Shared/LoadingButton';
 import TextInput from '@/Shared/TextInput';
 import SelectInput from '@/Shared/SelectInput';
 
+import { colourOptions } from '../utils/options';
+
+const animatedComponents = makeAnimated();
+
 const Edit = () => {
-    const { user } = usePage().props;
-    console.log(user);
+    const { user: { data: user } } = usePage().props;
     const { data, setData, errors, post, processing } = useForm({
         name: user.name || '',
         surname: user.surname || '',
@@ -19,7 +25,7 @@ const Edit = () => {
         mobile: user.mobile || '',
         email: user.email || '',
         dob: user.dob || '',
-        language: user.language || '',
+        language: user.language || 'english',
         interests: user.interests || [],
         password: user.password || '',
 
@@ -71,6 +77,7 @@ const Edit = () => {
                             errors={errors.name}
                             value={data.name}
                             onChange={e => setData('name', e.target.value)}
+                            required
                         />
 
                         <TextInput
@@ -81,6 +88,40 @@ const Edit = () => {
                             errors={errors.surname}
                             value={data.surname}
                             onChange={e => setData('surname', e.target.value)}
+                            required
+                        />
+
+                        <TextInput
+                            className="w-full pb-8 pr-6 lg:w-1/2"
+                            label="Id Number"
+                            type="text"
+                            name="id_number"
+                            errors={errors.id_number}
+                            value={data.id_number}
+                            onChange={e => setData('id_number', e.target.value)}
+                            required
+                        />
+
+                        <TextInput
+                            className="w-full pb-8 pr-6 lg:w-1/2"
+                            label="Mobile"
+                            type="tel"
+                            name="mobile"
+                            errors={errors.mobile}
+                            value={data.mobile}
+                            onChange={e => setData('mobile', e.target.value)}
+                            required
+                        />
+
+                        <TextInput
+                            className="w-full pb-8 pr-6 lg:w-1/2"
+                            label="Date of Birth"
+                            type="date"
+                            name="dob"
+                            errors={errors.dob}
+                            value={data.dob}
+                            onChange={e => setData('dob', e.target.value)}
+                            required
                         />
 
                         <TextInput
@@ -91,7 +132,22 @@ const Edit = () => {
                             errors={errors.email}
                             value={data.email}
                             onChange={e => setData('email', e.target.value)}
+                            required
                         />
+
+                        <SelectInput
+                            className='w-full pb-8 pr-6 lg:w-1/2'
+                            label='Language'
+                            name='language'
+                            errors={errors.language}
+                            value={data.language}
+                            onChange={e => setData('language', e.target.value)}
+                            required
+                        >
+                            <option value='english' selected={data.language === 'english'}>English</option>
+                            <option value='spanish' selected={data.language === 'spanish'}>Spanish</option>
+                        </SelectInput>
+
                         <TextInput
                             className='w-full pb-8 pr-6 lg:w-1/2'
                             label='Password'
@@ -100,18 +156,26 @@ const Edit = () => {
                             errors={errors.password}
                             value={data.password}
                             onChange={e => setData('password', e.target.value)}
+                            required
                         />
-                        <SelectInput
-                            className='w-full pb-8 pr-6 lg:w-1/2'
-                            label='Language'
-                            name='language'
-                            errors={errors.language}
-                            value={data.language}
-                            onChange={e => setData('language', e.target.value)}
-                        >
-                            <option value='english' selected={data.language === 'english'}>English</option>
-                            <option value='spanish' selected={data.language === 'spanish'}>Spanish</option>
-                        </SelectInput>
+
+                        <div className={'flex flex-wrap w-full pb-8 pr-6 lg:w-1/2'}>
+                            <label className='form-label mb-1' htmlFor={'interests'}>
+                                Interests:
+                            </label>
+
+                            <Select
+                                closeMenuOnSelect={false}
+                                components={animatedComponents}
+                                isMulti
+                                options={colourOptions}
+                                minMenuHeight={50}
+                                required
+                                name={'interests'}
+                                onChange={newValue => setData('interests', [...newValue])}
+                                value={data.interests}
+                            />
+                        </div>
 
                     </div>
                     <div className='flex items-center px-8 py-4 bg-gray-100 border-t border-gray-200'>

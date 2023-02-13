@@ -19,16 +19,16 @@ class UserUpdateRequest extends FormRequest
     {
         return [
             'name' => ['required', 'max:50'],
-            'last_name' => ['required', 'max:50'],
-            'id_number' => ['nullable'],
-            'mobile' => ['nullable'],
+            'surname' => ['required', 'max:50'],
+            'id_number' => ['required'],
+            'mobile' => ['required'],
             'email' => ['required', 'max:50', 'email',
                 Rule::unique('users')->ignore($this->route('user')->id)
             ],
-            'password' => ['nullable'],
-            'dob' => ['nullable'],
-            'language' => ['nullable'],
-            'interests' => ['nullable'],
+            'password' => ['required'],
+            'dob' => ['date_format:Y-m-d', 'before:today', 'nullable'],
+            'language' => ['required'],
+            'interests' => ['required'],
         ];
     }
 }

@@ -12,7 +12,6 @@ export default () => {
     const [opened, setOpened] = useState(false);
 
     const [values, setValues] = useState({
-        role: filters.role || '', // role is used only on users page
         search: filters.search || '',
         trashed: filters.trashed || ''
     });
@@ -21,9 +20,7 @@ export default () => {
 
     function reset() {
         setValues({
-            role: '',
             search: '',
-            trashed: ''
         });
     }
 
@@ -55,40 +52,7 @@ export default () => {
     return (
         <div className="flex items-center w-full max-w-md mr-4">
             <div className="relative flex w-full bg-white rounded shadow">
-                <div
-                    style={{ top: '100%' }}
-                    className={`absolute ${opened ? '' : 'hidden'}`}
-                >
-                    <div
-                        onClick={() => setOpened(false)}
-                        className="fixed inset-0 z-20 bg-black opacity-25"
-                    ></div>
-                    <div className="relative z-30 w-64 px-4 py-6 mt-2 bg-white rounded shadow-lg">
-                        {filters.hasOwnProperty('role') && (
-                            <SelectInput
-                                className="mb-4"
-                                label="Role"
-                                name="role"
-                                value={values.role}
-                                onChange={handleChange}
-                            >
-                                <option value=""></option>
-                                <option value="user">User</option>
-                                <option value="owner">Owner</option>
-                            </SelectInput>
-                        )}
-                        <SelectInput
-                            label="Trashed"
-                            name="trashed"
-                            value={values.trashed}
-                            onChange={handleChange}
-                        >
-                            <option value=""></option>
-                            <option value="with">With Trashed</option>
-                            <option value="only">Only Trashed</option>
-                        </SelectInput>
-                    </div>
-                </div>
+
                 <button
                     onClick={() => setOpened(true)}
                     className="px-4 border-r rounded-l md:px-6 hover:bg-gray-100 focus:outline-none focus:border-white focus:ring-2 focus:ring-indigo-400 focus:z-10"

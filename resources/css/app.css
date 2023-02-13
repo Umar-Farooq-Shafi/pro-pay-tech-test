@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.css-b62m3t-container {
+    position: relative;
+    box-sizing: border-box;
+    width: 100%;
+}

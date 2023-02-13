@@ -27,7 +27,7 @@ const Create = () => {
         mobile: '',
         email: '',
         dob: '',
-        language: '',
+        language: 'english',
         interests: [],
         password: '',
     });
@@ -63,6 +63,7 @@ const Create = () => {
                             errors={errors.name}
                             value={data.name}
                             onChange={e => setData('name', e.target.value)}
+                            required
                         />
 
                         <TextInput
@@ -73,6 +74,7 @@ const Create = () => {
                             errors={errors.surname}
                             value={data.surname}
                             onChange={e => setData('surname', e.target.value)}
+                            required
                         />
 
                         <TextInput
@@ -83,6 +85,7 @@ const Create = () => {
                             errors={errors.id_number}
                             value={data.id_number}
                             onChange={e => setData('id_number', e.target.value)}
+                            required
                         />
 
                         <TextInput
@@ -93,6 +96,18 @@ const Create = () => {
                             errors={errors.mobile}
                             value={data.mobile}
                             onChange={e => setData('mobile', e.target.value)}
+                            required
+                        />
+
+                        <TextInput
+                            className="w-full pb-8 pr-6 lg:w-1/2"
+                            label="Date of Birth"
+                            type="date"
+                            name="dob"
+                            errors={errors.dob}
+                            value={data.dob}
+                            onChange={e => setData('dob', e.target.value)}
+                            required
                         />
 
                         <TextInput
@@ -103,6 +118,7 @@ const Create = () => {
                             errors={errors.email}
                             value={data.email}
                             onChange={e => setData('email', e.target.value)}
+                            required
                         />
 
                         <SelectInput
@@ -112,6 +128,7 @@ const Create = () => {
                             errors={errors.language}
                             value={data.language}
                             onChange={e => setData('language', e.target.value)}
+                            required
                         >
                             <option value="english">English</option>
                             <option value="spanish">Spanish</option>
@@ -125,6 +142,7 @@ const Create = () => {
                             errors={errors.password}
                             value={data.password}
                             onChange={e => setData('password', e.target.value)}
+                            required
                         />
 
                         <div className={'flex flex-wrap w-full pb-8 pr-6 lg:w-1/2'}>
@@ -140,11 +158,7 @@ const Create = () => {
                                 minMenuHeight={50}
                                 required
                                 name={'interests'}
-                                onChange={newValue => {
-                                    const val = [];
-                                    newValue.forEach(v => val.push(v.value));
-                                    setData('interests', [...val]);
-                                }}
+                                onChange={newValue => setData('interests', [...newValue])}
                                 // value={data.interests}
                             />
                         </div>

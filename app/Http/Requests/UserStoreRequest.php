@@ -25,14 +25,14 @@ class UserStoreRequest extends FormRequest
     {
         return [
             'name' => ['required', 'max:50'],
-            'surname' => ['nullable', 'max:50'],
-            'id_number' => ['nullable'],
-            'mobile' => ['nullable'],
+            'surname' => ['required', 'max:50'],
+            'id_number' => ['required'],
+            'mobile' => ['required'],
             'email' => ['required', 'max:50', 'email', 'unique:users'],
-            'dob' => ['nullable'],
-            'language' => ['nullable'],
-            'interests' => ['nullable'],
-            'password' => ['nullable'],
+            'dob' => ['date_format:Y-m-d', 'before:today', 'required'],
+            'language' => ['required'],
+            'interests' => ['required'],
+            'password' => ['required'],
         ];
     }
 }

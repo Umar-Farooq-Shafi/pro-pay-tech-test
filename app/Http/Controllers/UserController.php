@@ -6,6 +6,7 @@ use App\Http\Requests\UserDeleteRequest;
 use App\Http\Requests\UserStoreRequest;
 use App\Http\Requests\UserUpdateRequest;
 use App\Http\Resources\UserResource;
+use App\Jobs\SendMail;
 use App\Models\User;
 use App\Services\UserService;
 use Illuminate\Http\RedirectResponse;
@@ -57,12 +58,9 @@ class UserController extends Controller
      */
     public function store(UserStoreRequest $request): RedirectResponse
     {
-        $this->userService->createUser(array_merge(
-            $request->except('interests'),
-            [
-                'interests' => "[" . implode(", ", $request->get('interests')) . "]"
-            ]
-        ));
+        $user = $this->userService->createUser($request->validated());
+
+        SendMail::dispatch($user);
 
         return Redirect::route('users')->with('success', 'User created.');
     }
@@ -101,7 +99,7 @@ class UserController extends Controller
     {
         $user->delete();
 
-        return Redirect::back()->with('success', 'User deleted.');
+        return Redirect::route('users')->with('success', 'User deleted.');
     }
 
 }
