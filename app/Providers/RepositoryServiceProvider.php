@@ -2,10 +2,10 @@
 
 namespace App\Providers;
 
-use App\Repository\Eloquent\BaseRepository;
-use App\Repository\Eloquent\UserRepository;
-use App\Repository\EloquentRepositoryInterface;
-use App\Repository\UserRepositoryInterface;
+use App\Repositories\Base\BaseRepositoryInterface;
+use App\Repositories\Base\Eloquent\BaseRepository;
+use App\Repositories\User\Eloquent\UserRepository;
+use App\Repositories\User\UserRepositoryInterface;
 use Inertia\ServiceProvider;
 
 class RepositoryServiceProvider extends ServiceProvider
@@ -17,7 +17,7 @@ class RepositoryServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->bind(EloquentRepositoryInterface::class, BaseRepository::class);
+        $this->app->bind(BaseRepositoryInterface::class, BaseRepository::class);
         $this->app->bind(UserRepositoryInterface::class, UserRepository::class);
     }
 

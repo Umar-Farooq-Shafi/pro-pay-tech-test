@@ -5,7 +5,6 @@ namespace Database\Seeders;
 use App\Models\User;
 use Hash;
 use Illuminate\Database\Seeder;
-use Str;
 
 class UserSeeder extends Seeder
 {
@@ -18,8 +17,8 @@ class UserSeeder extends Seeder
     {
         User::factory()
             ->create([
-                'email' => 'admin@email.com',
-                'password' => \Hash::make('12345678'),
+                'email' => config('custom.emails.admin'),
+                'password' => Hash::make('12345678'),
             ]);
 
         User::factory()

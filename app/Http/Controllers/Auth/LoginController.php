@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Inertia\Inertia;
 use Inertia\Response;
+use \Illuminate\Contracts\Validation\Validator as Validation;
 
 class LoginController extends Controller
 {
@@ -74,7 +75,7 @@ class LoginController extends Controller
      * @param  array  $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
-    protected function validator(array $data): \Illuminate\Contracts\Validation\Validator
+    protected function validator(array $data): Validation
     {
         return Validator::make($data, [
             'email'         => ['required'],

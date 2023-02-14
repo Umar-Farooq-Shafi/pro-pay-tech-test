@@ -83,9 +83,7 @@ class UserController extends Controller
      */
     public function update(User $user, UserUpdateRequest $request): RedirectResponse
     {
-        $user->update(
-            $request->validated()
-        );
+        $this->userService->updateUser($user, $request);
 
         return Redirect::back()->with('success', 'User updated.');
     }
@@ -97,9 +95,8 @@ class UserController extends Controller
      */
     public function destroy(User $user, UserDeleteRequest $request): RedirectResponse
     {
-        $user->delete();
+        $this->userService->deleteUser($user);
 
         return Redirect::route('users')->with('success', 'User deleted.');
     }
-
 }

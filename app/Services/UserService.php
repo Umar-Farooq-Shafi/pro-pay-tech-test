@@ -2,9 +2,9 @@
 
 namespace App\Services;
 
+use App\Http\Requests\UserUpdateRequest;
 use App\Models\User;
-use App\Repository\UserRepositoryInterface;
-use Illuminate\Database\Eloquent\Collection;
+use App\Repositories\User\UserRepositoryInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 
@@ -47,5 +47,26 @@ class UserService
     public function createUser(mixed $validated): ?Model
     {
         return $this->userRepository->create($validated);
+    }
+
+    /**
+     * @param User $user
+     * @param UserUpdateRequest $request
+     * @return void
+     */
+    public function updateUser(User $user, UserUpdateRequest $request): void
+    {
+        $user->update(
+            $request->validated()
+        );
+    }
+
+    /**
+     * @param User $user
+     * @return void
+     */
+    public function deleteUser(User $user): void
+    {
+        $user->delete();
     }
 }

@@ -15,9 +15,9 @@ class Admin
      *
      * @param Request $request
      * @param Closure(Request): (Response|RedirectResponse) $next
-     * @return Response|RedirectResponse
+     * @return mixed
      */
-    public function handle(Request $request, Closure $next)
+    public function handle(Request $request, Closure $next): mixed
     {
         if(!Auth::user() || !Auth::user()->isDemoUser()) {
             Auth::guard('web')->logout();

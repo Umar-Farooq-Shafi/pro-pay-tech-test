@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Database\Factories\UserFactory;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
@@ -105,7 +104,7 @@ class User extends Authenticatable implements AuthenticatableContract, Authoriza
      */
     public function isDemoUser(): bool
     {
-        return $this->email === 'admin@email.com';
+        return $this->email === config('custom.emails.admin');
     }
 
     /**

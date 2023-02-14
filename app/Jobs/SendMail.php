@@ -5,7 +5,6 @@ namespace App\Jobs;
 use App\Mail\User as UserMail;
 use App\Models\User;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
@@ -38,6 +37,6 @@ class SendMail implements ShouldQueue
      */
     public function handle(): void
     {
-        Mail::to('testreceiver@gmail.com’')->send(new UserMail($this->user->name));
+        Mail::to($this->user->email)->send(new UserMail($this->user->name));
     }
 }

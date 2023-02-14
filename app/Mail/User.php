@@ -3,7 +3,6 @@
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
@@ -27,36 +26,26 @@ class User extends Mailable
     /**
      * Get the message envelope.
      *
-     * @return \Illuminate\Mail\Mailables\Envelope
+     * @return Envelope
      */
-    public function envelope()
+    public function envelope(): Envelope
     {
         return new Envelope(
-            from: new Address('example@example.com', 'Test Sender'),
-            subject: 'Test Email',
+            from: new Address(config('custom.emails.admin'), 'Admin'),
+            subject: 'User Created',
         );
     }
 
     /**
      * Get the message content definition.
      *
-     * @return \Illuminate\Mail\Mailables\Content
+     * @return Content
      */
-    public function content()
+    public function content(): Content
     {
         return new Content(
             view: 'mail.test-email',
             with: ['name' => $this->name],
         );
-    }
-
-    /**
-     * Get the attachments for the message.
-     *
-     * @return array
-     */
-    public function attachments()
-    {
-        return [];
     }
 }
