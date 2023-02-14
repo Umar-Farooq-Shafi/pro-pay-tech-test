@@ -13,17 +13,12 @@ use Illuminate\Database\Eloquent\Model;
 class UserRepository extends BaseRepository implements UserRepositoryInterface
 {
     /**
-     * @var Model
-     */
-    protected Model $model;
-
-    /**
      * BaseRepository constructor.
      *
      * @param User $model
      */
-    public function __construct(User $model)
+    public function __construct(User $user)
     {
-        $this->model = $model;
+        parent::__construct($user);
     }
 }
